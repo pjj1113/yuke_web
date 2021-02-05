@@ -1,11 +1,11 @@
 <template>
   <el-dialog
-    title="提示"
+    title="商户二维码"
     :visible.sync="dialogVisible"
     width="50%"
     :before-close="handleClose">
-    <div>
-      <vueQr text="1232132"  :logoScale="0.23" :size="300" />
+    <div class="qr">
+      <vueQr :text="`http://121.36.109.194:8080/?stop_id=${ info.stop_id }`" :logoScale="0.23" :size="300" />
     </div>
   <span slot="footer" class="dialog-footer">
     <el-button @click="handleClose">取 消</el-button>
@@ -19,7 +19,7 @@ export default {
   components: {
     vueQr
   },
-  props:['dialogVisible'],
+  props:['dialogVisible','info'],
   data() {
     return {
     }
@@ -33,5 +33,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.qr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

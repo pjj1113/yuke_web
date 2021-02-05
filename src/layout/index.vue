@@ -1,10 +1,10 @@
 <template>
   <el-container style="height: 100%; border: 1px solid #eee">
     <el-aside width="200px" height="100%" style="background-color:#545c64">
-      <h3 class="lay-out">ABEL</h3>
+      <h3 class="lay-out">悦刻</h3>
       <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu index="1">
-          <template slot="title"> <i class="el-icon-message"></i>首页 </template>
+          <template slot="title"> <i class="el-icon-message"></i>数据统计 </template>
           <el-menu-item-group>
             <el-menu-item index="1-1">
               <router-link to="/home">
@@ -73,14 +73,14 @@
           </el-menu-item-group>
         </el-submenu> -->
 
-        <el-submenu index="7">
+        <!-- <el-submenu index="7">
           <template slot="title"> <i class="el-icon-warning"></i>说明 </template>
           <el-menu-item-group>
             <el-menu-item index="7-1">
               <router-link to="/explain">说明</router-link>
             </el-menu-item>
           </el-menu-item-group>
-        </el-submenu>
+        </el-submenu> -->
       </el-menu>
     </el-aside>
 
@@ -94,7 +94,7 @@
             <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
+        <span>管理后台</span>
       </el-header>
 
       <el-main>

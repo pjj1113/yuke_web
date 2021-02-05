@@ -22,7 +22,7 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <vueQr :info="info" :dialogVisible="dialogVisible" @closeDialog="closeDialog"/>
+    <vueQr v-if="dialogVisible" :info="info" :dialogVisible="dialogVisible" @closeDialog="closeDialog"/>
     <edit :isEdit="isEdit" @closeEdit="closeEdit"/>
   </div>
 </template>

@@ -61,3 +61,6 @@ export function addStopUser(data) {
 		}
 	})
 }
+export function getUser(data) {
+  return fetchGet('/users/get', data)
+}
