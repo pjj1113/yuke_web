@@ -5,7 +5,7 @@
     width="50%"
     :before-close="handleClose">
     <div class="qr">
-      <vueQr :text="`http://yueke-h5.chuanzhiyun.cn?stop_id=${ info.stop_id }`" :logoScale="0.23" :size="300" />
+      <vueQr :text="`http://yueke-h5.chuanzhiyun.cn/user?stop_id=${ info.stop_id }`" :logoScale="0.23" :size="300" />
     </div>
   <span slot="footer" class="dialog-footer">
     <el-button @click="handleClose">取 消</el-button>
