@@ -13,7 +13,7 @@
         <el-table-column prop="item_id" label="编号" width="170"></el-table-column>
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column prop="type" label="型号"></el-table-column>
-        <el-table-column prop="price" label="单价"></el-table-column>
+        <el-table-column prop="price" label="进货价"></el-table-column>
         <el-table-column prop="betray" label="出售价"></el-table-column>
         <el-table-column prop="num" label="总数量"></el-table-column>
         <el-table-column prop="binding" label="合计">

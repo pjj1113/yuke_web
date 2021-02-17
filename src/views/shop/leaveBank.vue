@@ -13,7 +13,7 @@
         <el-table-column prop="item_id" label="编号" width="170"></el-table-column>
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column prop="type" label="型号"></el-table-column>
-        <el-table-column prop="price" label="单价"></el-table-column>
+        <el-table-column prop="price" label="进货价"></el-table-column>
         <el-table-column prop="betray" label="出售价"></el-table-column>
         <el-table-column prop="pop_num" label="出库数量"></el-table-column>
         <el-table-column prop="binding" label="售出总价">
@@ -23,7 +23,7 @@
         </el-table-column>
         <el-table-column prop="binding" label="获取利润">
           <template slot-scope="{row}">
-            <div>{{ row.betray*row.pop_num - row.betray*row.num }}</div>
+            <div>{{ row.betray*row.pop_num - row.price*row.pop_num }}</div>
           </template>
         </el-table-column>
         <el-table-column prop="name" label="操作">

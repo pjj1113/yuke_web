@@ -19,7 +19,7 @@
           <el-input v-model="form.type"></el-input>
         </el-form-item>
 
-        <el-form-item label="单价">
+        <el-form-item label="进货价">
           <el-input v-model="form.price"></el-input>
         </el-form-item>
 
