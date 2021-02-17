@@ -28,10 +28,14 @@ export default [
         path:'/user',
         component:User
     },
-    // {
-    //     path:'/shop',
-    //     component:Shop
-    // },
+    {
+        path:'/shop',
+        component:Shop
+    },
+    {
+      path: '/leaveBank',
+      component: () => import('@/views/shop/leaveBank')
+    },
     // {
     //     path:'/food',
     //     component:Food

@@ -2,10 +2,10 @@
   <div>
     <el-card class="box-card">
        <div slot="header" class="clearfix">
-        <span>入库管理</span>
+        <span>出库管理</span>
         <transition name="slide-fade" mode="out-in">
 					<span class="float-right">
-						<el-button type="primary" @click="add">新增</el-button>
+						<!-- <el-button type="primary" @click="add">新增</el-button> -->
 					</span>
 				</transition>
       </div>
@@ -15,18 +15,21 @@
         <el-table-column prop="type" label="型号"></el-table-column>
         <el-table-column prop="price" label="单价"></el-table-column>
         <el-table-column prop="betray" label="出售价"></el-table-column>
-        <el-table-column prop="num" label="总数量"></el-table-column>
-        <el-table-column prop="binding" label="合计">
+        <el-table-column prop="pop_num" label="出库数量"></el-table-column>
+        <el-table-column prop="binding" label="售出总价">
           <template slot-scope="{row}">
-            <div>{{ row.price*row.num }}</div>
+            <div>{{ row.betray*row.pop_num }}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="操作" width="250">
+        <el-table-column prop="binding" label="获取利润">
           <template slot-scope="{row}">
-            <el-button size="mini" @click="edit(row)" type="primary">修改</el-button>
-            <el-button size="mini" @click="leave(row)" type="primary">出库</el-button>
+            <div>{{ row.betray*row.pop_num - row.betray*row.num }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="name" label="操作">
+          <template slot-scope="{row}">
+            <!-- <el-button size="mini" @click="edit(row)" type="primary">修改</el-button> -->
             <el-button size="mini" @click="delDate(row)" type="danger">删除</el-button>
-            <!-- <div>{{ row.price*row.num }}</div> -->
           </template>
         </el-table-column>
       </el-table>
@@ -36,7 +39,7 @@
 </template>
 <script>
 
-import { getRepertoryList, getRepertorydel, getRepertoryLeaveBank } from '../../api/index.js';
+import { getRepertoryList,getRepertorydel } from '../../api/index.js';
 import edit from './components/edit'
 export default {
   components: {
@@ -56,28 +59,8 @@ export default {
   methods: {
    getRepertoryList() {
      getRepertoryList().then(res => {
-       this.tableList = res.list.filter(item => item.start == 1)
-     })
-   },
-   leave(val) {
-     this.$prompt('请输入离库数量', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(({ value }) => {
-          this.info = val;
-          this.$set(this.info, 'pop_num', value)
-          this.getRepertoryLeaveBank();
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });       
-        });
-   },
-   getRepertoryLeaveBank(val) {
-     let  { item_id, name, type, price, betray, num, pop_num } = this.info
-     getRepertoryLeaveBank({ item_id, name, type, price, betray, pop_num }).then(res => {
-       
+       this.tableList = res.list.filter(item => item.start == 2)
+       console.log(res)
      })
    },
    add() {

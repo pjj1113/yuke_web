@@ -19,20 +19,17 @@
           </el-menu-item-group>
         </el-submenu>
 
-        <!-- <el-submenu index="2">
-          <template slot="title"> <i class="el-icon-menu"></i>数据管理 </template>
+        <el-submenu index="2">
+          <template slot="title"> <i class="el-icon-menu"></i>库存管理 </template>
           <el-menu-item-group>
             <el-menu-item index="2-1">
-              <router-link to="/user">用户列表</router-link>
+              <router-link to="/shop">入库管理</router-link>
             </el-menu-item>
             <el-menu-item index="2-2">
-              <router-link to="/shop">商家列表</router-link>
-            </el-menu-item>
-            <el-menu-item index="2-3">
-              <router-link to="/food">食品列表</router-link>
+              <router-link to="/leaveBank">出库管理</router-link>
             </el-menu-item>
           </el-menu-item-group>
-        </el-submenu> -->
+        </el-submenu>
 
         <!-- <el-submenu index="3">
           <template slot="title"> <i class="el-icon-document"></i>添加数据 </template>

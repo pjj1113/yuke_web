@@ -64,3 +64,36 @@ export function addStopUser(data) {
 export function getUser(data) {
   return fetchGet('/users/get', data)
 }
+export function getRepertoryList(data) {
+  return fetchGet('/repertory/select', data)
+}
+export function getRepertoryAdd(data) {
+  return fetchPost('/repertory/add', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 删除记录
+export function getRepertorydel(data) {
+  return fetchPost('/repertory/delete', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+export function getRepertoryUpdate(data) {
+  return fetchPost('/repertory/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 
+export function getRepertoryLeaveBank(data) {
+  return fetchPost('/repertory/leaveBank', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
