@@ -6,6 +6,7 @@
         <transition name="slide-fade" mode="out-in">
 					<span class="float-right">
 						<el-button type="primary" @click="add">新增</el-button>
+            <el-button type="primary" @click="exportExcelMethod">导出</el-button>
 					</span>
 				</transition>
       </div>
@@ -32,10 +33,30 @@
       </el-table>
     </el-card>
     <edit :isEdit="isEdit" v-if="isEdit" @closeEdit="closeEdit" :info="info"/>
+    <table id="exporttable" v-show="false">
+      <tr>
+        <td>编号</td>
+        <td>名称</td>
+        <td>型号</td>
+        <td>进货价</td>
+        <td>出售价</td>
+        <td>总数量</td>
+        <td>合计</td>
+      </tr>
+      <tr v-for="(item, index) in tableList" :key="index">
+        <td>{{ item.item_id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.type }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.betray }}</td>
+        <td>{{ item.num }}</td>
+        <td>{{ item.price*item.num }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 <script>
-
+import { exportExcelMethod } from '@/utils/exportExcel';
 import { getRepertoryList, getRepertorydel, getRepertoryLeaveBank } from '../../api/index.js';
 import edit from './components/edit'
 export default {
@@ -54,6 +75,9 @@ export default {
     this.getRepertoryList();
   },
   methods: {
+    exportExcelMethod() {
+      exportExcelMethod('exporttable',  '出货统计', 'sheet1');
+    },
    getRepertoryList() {
      getRepertoryList().then(res => {
        this.tableList = res.list.filter(item => item.start == 1)
