@@ -97,3 +97,16 @@ export function getRepertoryLeaveBank(data) {
 		}
 	})
 }
+
+
+export function getTypeList() {
+  return fetchGet('/type/select')
+}
+
+export function addType(data) {
+  return fetchPost('/type/add', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
