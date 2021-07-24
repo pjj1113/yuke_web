@@ -99,12 +99,26 @@ export function getRepertoryLeaveBank(data) {
 }
 
 
-export function getTypeList() {
-  return fetchGet('/type/select')
-}
+// export function getTypeList() {
+//   return fetchGet('/type/select')
+// }
 
+// export function addType(data) {
+//   return fetchPost('/type/add', data, {
+// 		headers: {
+// 			'Content-Type': 'application/json'
+// 		}
+// 	})
+// }
+
+
+// 型号 
+export function getCommodityTypeList() {
+  return fetchGet('/commodity/type/getlist')
+}
+// 添加 /type/add
 export function addType(data) {
-  return fetchPost('/type/add', data, {
+  return fetchPost('/commodity/type/add', data, {
 		headers: {
 			'Content-Type': 'application/json'
 		}

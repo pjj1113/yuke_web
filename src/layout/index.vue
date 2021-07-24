@@ -4,11 +4,11 @@
       <h3 class="lay-out">悦刻</h3>
       <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu index="1">
-          <template slot="title"> <i class="el-icon-message"></i>数据统计 </template>
+          <template slot="title"> <i class="el-icon-message"></i>商品管理</template>
           <el-menu-item-group>
             <el-menu-item index="1-1">
-              <router-link to="/home">
-                商户数据
+              <router-link to="/type">
+                型号管理
               </router-link>
             </el-menu-item>
              <el-menu-item index="1-1">

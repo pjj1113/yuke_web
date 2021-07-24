@@ -1,6 +1,8 @@
 const Home = () => import(/* webpackChunkName: "group-foo" */ 'views/home')
 const User = () => import(/* webpackChunkName: "group-foo" */ 'views/user')
 const Shop = () => import(/* webpackChunkName: "group-foo" */ 'views/shop')
+const Type = () => import(/* webpackChunkName: "group-foo" */ 'views/type')
+
 const Food = () => import(/* webpackChunkName: "group-foo" */ 'views/food')
 const ShopAdd = () => import(/* webpackChunkName: "group-foo" */ 'views/shop_add')
 const FoodAdd = () => import(/* webpackChunkName: "group-foo" */ 'views/food_add')
@@ -18,7 +20,11 @@ import ShopModify from 'views/shop_modify'
 export default [
     {
         path:'/',
-        redirect:'/home'
+        redirect:'/type'
+    },
+    {
+        path: '/type',
+        component: Type
     },
     {
         path:'/home',
