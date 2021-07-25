@@ -124,3 +124,7 @@ export function addType(data) {
 		}
 	})
 }
+// 入库
+export function getStoreList() {
+	return fetchGet('/store/getlist')
+  }

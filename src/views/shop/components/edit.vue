@@ -51,7 +51,7 @@
 </el-dialog>
 </template>
 <script>
-import { getRepertoryAdd, getRepertoryUpdate, addType,getTypeList } from '../../../api/index.js'
+import { getCommodityTypeList,getRepertoryAdd, getRepertoryUpdate, addType,getTypeList } from '../../../api/index.js'
 export default {
   props:['isEdit','info'],
   data() {
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     getTypeList() {
-      getTypeList().then(res => {
+      getCommodityTypeList().then(res => {
         this.classifyList = res.list
         console.log(res)
       })
