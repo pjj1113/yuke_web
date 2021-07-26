@@ -39,6 +39,10 @@ export default [
         component:Shop
     },
     {
+        path: '/store',
+        component: () => import('@/views/type/store')
+      },
+    {
       path: '/leaveBank',
       component: () => import('@/views/shop/leaveBank')
     },

@@ -43,7 +43,7 @@
 </el-dialog>
 </template>
 <script>
-import { getCommodityTypeList, addStoreEnter, updateStoreEnter } from '../../../api/index.js'
+import { getCommodityTypeList, addStoreOut, updateStoreOut } from '../../../api/index.js'
 export default {
   props:['isEdit','info'],
   data() {
@@ -78,7 +78,7 @@ export default {
     addStopUser() {
       if(this.info.id) {
         let  { id, type_id, num, price, remark, barcode  } = this.form
-        updateStoreEnter({ id, type_id, num, price, remark, barcode }).then(res => {
+        updateStoreOut({ id, type_id, num, price, remark, barcode }).then(res => {
           this.$message({
           message: '修改成功',
           type: 'success'
@@ -88,7 +88,7 @@ export default {
         })
       } else {
         let  { type_id, num, price, remark, barcode } = this.form
-        addStoreEnter({ type_id, num, price, remark, barcode }).then(res => {
+        addStoreOut({ type_id, num, price, remark, barcode }).then(res => {
           this.$message({
             message: '添加成功',
             type: 'success'

@@ -125,6 +125,62 @@ export function addType(data) {
 	})
 }
 // 入库
+// 查询
 export function getStoreList() {
-	return fetchGet('/store/getlist')
-  }
+	return fetchGet('/store/enter/getlist')
+}
+// 添加
+export function addStoreEnter(data) {
+  return fetchPost('/store/enter/add', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 修改
+export function updateStoreEnter(data) {
+  return fetchPost('/store/enter/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+
+// 删除
+export function delStoreEnter(data) {
+  return fetchPost('/store/enter/delete', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+
+// 查询
+export function getStoreOutList() {
+	return fetchGet('/store/out/getlist')
+}
+// 添加
+export function addStoreOut(data) {
+  return fetchPost('/store/out/add', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 修改
+export function updateStoreOut(data) {
+  return fetchPost('/store/out/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+
+// 删除
+export function delStoreOut(data) {
+  return fetchPost('/store/out/delete', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}

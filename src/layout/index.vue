@@ -11,9 +11,14 @@
                 型号管理
               </router-link>
             </el-menu-item>
-             <el-menu-item index="1-1">
+             <!-- <el-menu-item index="1-1">
               <router-link to="/user">
                 用户数据
+              </router-link>
+            </el-menu-item> -->
+            <el-menu-item index="1-2"> 
+              <router-link to="/store">
+                库存管理
               </router-link>
             </el-menu-item>
           </el-menu-item-group>
