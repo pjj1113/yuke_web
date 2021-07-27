@@ -124,6 +124,14 @@ export function addType(data) {
 		}
 	})
 }
+// 删除
+export function delType(data) {
+  return fetchPost('/commodity/type/delete', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
 // 入库
 // 查询
 export function getStoreList(data) {

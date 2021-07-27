@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="新增商户"
+    title="新增产品"
     :visible.sync="isEdit"
     width="60%"
     :before-close="closeEdit">
@@ -16,7 +16,14 @@
           <el-input v-model="form.barcode"></el-input>
         </el-form-item>
         <el-form-item label="图片">
-          <el-input v-model="form.imgList"></el-input>
+          <el-upload
+            action
+            :http-request="Upload"
+            class="avatar-uploader"
+            :show-file-list="false">
+            <img v-if="form.imgList" :src="form.imgList" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item label="单价">
           <el-input v-model="form.price"></el-input>
@@ -34,6 +41,7 @@
 </template>
 <script>
 import { addType } from '../../../api/index.js'
+import OSS from 'ali-oss';
 export default {
   props:['isEdit'],
   data() {
@@ -45,8 +53,18 @@ export default {
         imgList: '',
         remark: '',
         price: ''
-      }
+      },
+      client: null
     }
+  },
+  mounted() {
+     this.client = new OSS({
+        region: "oss-cn-beijing", //阿里云获取
+        accessKeyId: "LTAI5tJG2oFF5kMcV8BqBdMw",
+        accessKeySecret: "0KRqXGdJRqeT07hlTd7DPomXru5qsu",
+        bucket: "project-ts"  //要存储的目录
+    });
+    console.log(this.client)
   },
   methods: {
     closeEdit() {
@@ -60,6 +78,44 @@ export default {
         });
         this.$emit('closeEdit')
       })
+    },
+    Upload(file) {
+      const that = this;
+      async function multipartUpload() {
+        let temporary = file.file.name.lastIndexOf(".");
+        let fileNameLength = file.file.name.length;
+        let fileFormat = file.file.name.substring(
+          temporary + 1,
+          fileNameLength
+        );
+        let fileName = that.getFileNameUUID() + "." + fileFormat; 
+        that.client.multipartUpload(`upload-file/${fileName}`, file.file)
+          .then(result => {
+            //上传成功返回值，可针对项目需求写其他逻辑
+            that.form.imgList = result.res.requestUrls[0].split('?')[0]
+            console.log(result);
+          })
+          .catch(err => {
+            console.log("err:", err);
+          });
+      }
+      multipartUpload();
+    },
+    getFileNameUUID(){
+      function rx() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+      }
+      return `${+new Date()}_${rx()}${rx()}`
+    },
+    timestamp() {
+      var time = new Date();
+      var y = time.getFullYear();
+      var m = time.getMonth() + 1;
+      var d = time.getDate();
+      var h = time.getHours();
+      var mm = time.getMinutes();
+      var s = time.getSeconds();
+      return "" + y + add0(m) + add0(d) + add0(h) + add0(mm) + add0(s);
     }
   }
  

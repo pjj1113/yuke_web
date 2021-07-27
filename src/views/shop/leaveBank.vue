@@ -103,15 +103,17 @@ export default {
     },
     getStoreList() {
       getStoreOutList({ pageSize: this.pageSize, currentPage: this.currentPage }).then(res => {
-        this.tableList = res.list.map(item => {
-          let type = this.typeList.filter(val => val.id == item.type_id)
-          console.log(type)
-          if(type) {
-            const { barcode, model, name } = type[0]
-            return { ...item,barcode, model, name }
-          }
-          return item
-        })
+        this.total = res.total
+        this.tableList = res.list
+        // res.list.map(item => {
+        //   let type = this.typeList.filter(val => val.id == item.type_id)
+        //   console.log(type)
+        //   if(type) {
+        //     const { barcode, model, name } = type[0]
+        //     return { ...item,barcode, model, name }
+        //   }
+        //   return item
+        // })
         console.log(this.tableList)
       })
     },
