@@ -18,11 +18,11 @@
         <el-table-column prop="imgList" label="图片"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column prop="creatr_date" label="创建时间"></el-table-column>
-        <el-table-column prop="remark" label="操作">
+        <!-- <el-table-column prop="remark" label="操作">
           <template slot-scope="{row}">
-            <!-- <el-button size="mini" @click="generate(row)" type="primary">生成二维码</el-button> -->
+            <el-button size="mini" @click="generate(row)" type="primary">生成二维码</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </el-card>
     <!-- <vueQr v-if="dialogVisible" :info="info" :dialogVisible="dialogVisible" @closeDialog="closeDialog"/> -->

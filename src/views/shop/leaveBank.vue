@@ -17,6 +17,7 @@
         <el-table-column prop="price" label="进货价"></el-table-column>
         <el-table-column prop="num" label="总数量"></el-table-column>
         <el-table-column prop="barcode" label="条码"></el-table-column>
+        <el-table-column prop="create_date" label="入库日期"></el-table-column>
         <!-- <el-table-column prop="pop_num" label="库存">
           <template slot-scope="{row}">
             <div>{{ row.num-row.pop_num }}</div>
@@ -36,23 +37,35 @@
           </template>
         </el-table-column>
       </el-table>
-      
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
     </el-card>
     <edit :isEdit="isEdit" v-if="isEdit" @closeEdit="closeEdit" :info="info"/>
     <table id="exporttable" v-show="false">
       <tr>
-        <td>类型</td>
         <td>编号</td>
-        <td>名称</td>
+        <td>商品名称</td>
+        <td>型号</td>
+        <td>条码</td>
         <td>总数量</td>
-        <td>库存</td>
+        <td>单价</td>
+        <td>出库日期</td>
       </tr>
       <tr v-for="(item, index) in tableList" :key="index">
-        <td>{{ getTypeName(item.classify) }}</td>
-        <td style="width:200px">{{ item.item_id }}</td>
+        <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
+        <td>{{ item.model }}</td>
+        <td>{{ item.barcode }}</td>
         <td>{{ item.num }}</td>
-        <td>{{ item.num-item.pop_num }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.create_date }}</td>
       </tr>
     </table>
   </div>
@@ -73,6 +86,9 @@ export default {
       isEdit: false,
       info:{},
       classifyList: [],
+      currentPage: 1,
+      pageSize: 10,
+      total: 0
     }
   },
   mounted() {
@@ -86,7 +102,7 @@ export default {
       })
     },
     getStoreList() {
-      getStoreOutList().then(res => {
+      getStoreOutList({ pageSize: this.pageSize, currentPage: this.currentPage }).then(res => {
         this.tableList = res.list.map(item => {
           let type = this.typeList.filter(val => val.id == item.type_id)
           console.log(type)
@@ -105,7 +121,15 @@ export default {
     exportExcelMethod() {
       exportExcelMethod('exporttable',  '出货统计', 'sheet1');
     },
-   leave(val) {
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getStoreList()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getStoreList()
+    },
+    leave(val) {
      this.$prompt('请输入离库数量', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

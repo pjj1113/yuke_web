@@ -3,9 +3,9 @@
     <div class="content">
       <h3>欢迎来到ABEL后台管理系统</h3>
       <form>
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
-        <el-input class="pwd" placeholder="请输入密码" v-model="input" show-password></el-input>
-        <el-button class="login-btn" type="primary">主要按钮</el-button>
+        <el-input v-model="input" placeholder="请输入用户名"></el-input>
+        <el-input class="pwd" placeholder="请输入密码" v-model="pwd" show-password></el-input>
+        <el-button class="login-btn" type="primary" @click="submit">主要按钮</el-button>
         <div class="long-text">
           <p>温馨提示：</p>
           <p>未登录过的新用户，自动注册</p>
@@ -21,8 +21,16 @@ export default {
   data() {
     return {
       input: '',
+      pwd: ''
     }
   },
+  methods: {
+    submit() {
+      if(this.input === 'admin' && this.pwd === 'admin') {
+        this.$router.push('/type')
+      }
+    }
+  }
 }
 </script>
 

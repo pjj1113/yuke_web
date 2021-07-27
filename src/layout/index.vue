@@ -11,11 +11,6 @@
                 型号管理
               </router-link>
             </el-menu-item>
-             <!-- <el-menu-item index="1-1">
-              <router-link to="/user">
-                用户数据
-              </router-link>
-            </el-menu-item> -->
             <el-menu-item index="1-2"> 
               <router-link to="/store">
                 库存管理
@@ -183,19 +178,7 @@
 .avatar-uploader-icon::before {
   line-height: 178px !important;
 }
-</style>
-
-<script>
-export default {
-  data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-    }
-    return {
-      tableData: Array(20).fill(item),
-    }
-  },
+.router-link-active {
+  background: #8c939d;
 }
-</script>
+</style>

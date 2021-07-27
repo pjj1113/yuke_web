@@ -126,8 +126,8 @@ export function addType(data) {
 }
 // 入库
 // 查询
-export function getStoreList() {
-	return fetchGet('/store/enter/getlist')
+export function getStoreList(data) {
+	return fetchGet('/store/enter/getlist',data)
 }
 // 添加
 export function addStoreEnter(data) {
@@ -156,8 +156,8 @@ export function delStoreEnter(data) {
 }
 
 // 查询
-export function getStoreOutList() {
-	return fetchGet('/store/out/getlist')
+export function getStoreOutList(data) {
+	return fetchGet('/store/out/getlist',data)
 }
 // 添加
 export function addStoreOut(data) {

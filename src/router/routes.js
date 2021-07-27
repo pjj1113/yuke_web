@@ -74,10 +74,10 @@ export default [
     //     path:'/explain',
     //     component:Explain
     // },
-    // {
-    //     path:'/login',
-    //     component:Login
-    // },
+    {
+        path:'/login',
+        component:Login
+    },
     // {
     //     path:'/register',
     //     component:Register

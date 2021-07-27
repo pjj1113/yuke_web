@@ -14,9 +14,10 @@
         <el-table-column prop="id" label="编号" width="170"></el-table-column>
         <el-table-column prop="name" label="商品名称"></el-table-column>
         <el-table-column prop="model" label="型号"></el-table-column>
+        <el-table-column prop="barcode" label="条码"></el-table-column>
         <el-table-column prop="price" label="进货价"></el-table-column>
         <el-table-column prop="num" label="总数量"></el-table-column>
-        <el-table-column prop="barcode" label="条码"></el-table-column>
+        <el-table-column prop="create_date" label="入库日期"></el-table-column>
         <!-- <el-table-column prop="pop_num" label="库存">
           <template slot-scope="{row}">
             <div>{{ row.num-row.pop_num }}</div>
@@ -36,23 +37,35 @@
           </template>
         </el-table-column>
       </el-table>
-      
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
     </el-card>
     <edit :isEdit="isEdit" v-if="isEdit" @closeEdit="closeEdit" :info="info"/>
     <table id="exporttable" v-show="false">
       <tr>
-        <td>类型</td>
         <td>编号</td>
-        <td>名称</td>
+        <td>商品名称</td>
+        <td>型号</td>
+        <td>条码</td>
         <td>总数量</td>
-        <td>库存</td>
+        <td>进货价</td>
+        <td>入库日期</td>
       </tr>
       <tr v-for="(item, index) in tableList" :key="index">
-        <td>{{ getTypeName(item.classify) }}</td>
-        <td style="width:200px">{{ item.item_id }}</td>
+        <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
+        <td>{{ item.model }}</td>
+        <td>{{ item.barcode }}</td>
         <td>{{ item.num }}</td>
-        <td>{{ item.num-item.pop_num }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.create_date }}</td>
       </tr>
     </table>
   </div>
@@ -74,6 +87,17 @@ export default {
       isEdit: false,
       info:{},
       classifyList: [],
+      currentPage: 1,
+      pageSize: 10,
+      total: 0
+    }
+  },
+  watch: {
+    currentPage: {
+      handler() {
+        this.getStoreList()
+      },
+      deep: true
     }
   },
   mounted() {
@@ -87,10 +111,10 @@ export default {
       })
     },
     getStoreList() {
-      getStoreList().then(res => {
+      getStoreList({ pageSize: this.pageSize, currentPage: this.currentPage }).then(res => {
+        this.total = res.total;
         this.tableList = res.list.map(item => {
           let type = this.typeList.filter(val => val.id == item.type_id)
-          console.log(type)
           if(type) {
             const { barcode, model, name } = type[0]
             return { ...item,barcode, model, name }
@@ -106,36 +130,15 @@ export default {
     exportExcelMethod() {
       exportExcelMethod('exporttable',  '出货统计', 'sheet1');
     },
-   leave(val) {
-     this.$prompt('请输入离库数量', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(({ value }) => {
-          if( val.num - val.pop_num < value) {
-            this.$message({
-              type: 'error',
-              message: '库存不够!'
-            });       
-            return
-          }
-          this.info = val;
-          this.$set(this.info, 'pop_num', value)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });       
-        });
-   },
-   add() {
-     this.isEdit = true;
-     this.info = {}
-   },
-   edit(val) {
-     this.info = val;
-     this.isEdit = true;
-   },
-   delDate(val) {
+    add() {
+      this.isEdit = true;
+      this.info = {}
+    },
+    edit(val) {
+      this.info = val;
+      this.isEdit = true;
+    },
+    delDate(val) {
      delStoreOut({ id: val.id }).then(res => {
         this.$message({
           message: '删除成功',
@@ -143,7 +146,15 @@ export default {
         });
       this.getStoreList();
      })
-   },
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getStoreList()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getStoreList()
+    },
     closeEdit() {
       this.isEdit = false;
       this.getStoreList();
