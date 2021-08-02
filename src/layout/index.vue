@@ -30,7 +30,14 @@
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-
+        <el-submenu index="3">
+          <template slot="title"> <i class="el-icon-menu"></i>订单管理</template>
+          <el-menu-item-group>
+            <el-menu-item index="3-1">
+              <router-link to="/pay">订单列表</router-link>
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
         <!-- <el-submenu index="3">
           <template slot="title"> <i class="el-icon-document"></i>添加数据 </template>
           <el-menu-item-group>

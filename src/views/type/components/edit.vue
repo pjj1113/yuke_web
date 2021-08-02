@@ -5,17 +5,17 @@
     width="60%"
     :before-close="closeEdit">
     <div>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="商品名称">
+      <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+        <el-form-item label="商品名称" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="商品类型">
+        <el-form-item label="商品类型" prop="model">
           <el-input v-model="form.model"></el-input>
         </el-form-item>
-        <el-form-item label="条形码">
+        <el-form-item label="条形码" prop="barcode">
           <el-input v-model="form.barcode"></el-input>
         </el-form-item>
-        <el-form-item label="图片">
+        <el-form-item label="图片" prop="imgList">
           <el-upload
             action
             :http-request="Upload"
@@ -25,7 +25,7 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="单价">
+        <el-form-item label="单价" prop="price">
           <el-input v-model="form.price"></el-input>
         </el-form-item>
         <el-form-item label="备注">
@@ -35,7 +35,7 @@
     </div>
   <span slot="footer" class="dialog-footer">
     <el-button @click="closeEdit">取 消</el-button>
-    <el-button @click="addStopUser" type="primary">确 定</el-button>
+    <el-button @click="addStopUser('form')" type="primary">确 定</el-button>
   </span>
 </el-dialog>
 </template>
@@ -54,6 +54,23 @@ export default {
         remark: '',
         price: ''
       },
+      rules: {
+        name: [
+          { required: true, message: '该项必填', trigger: 'blur' },
+        ], 
+        model: [
+          { required: true, message: '该项必填', trigger: 'blur' },
+        ], 
+        barcode: [
+          { required: true, message: '该项必填', trigger: 'blur' },
+        ], 
+        imgList: [
+          { required: true, message: '该项必填', trigger: 'blur' },
+        ],
+        price: [
+          { required: true, message: '该项必填', trigger: 'blur' },
+        ]
+      },
       client: null
     }
   },
@@ -70,14 +87,19 @@ export default {
     closeEdit() {
       this.$emit('closeEdit')
     },
-    addStopUser() {
-      addType(this.form).then(res => {
-        this.$message({
-          message: '添加成功',
-          type: 'success'
-        });
-        this.$emit('closeEdit')
+    addStopUser(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          addType(this.form).then(res => {
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            });
+            this.$emit('closeEdit')
+          })
+        }
       })
+      
     },
     Upload(file) {
       const that = this;

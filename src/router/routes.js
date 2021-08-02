@@ -20,7 +20,7 @@ import ShopModify from 'views/shop_modify'
 export default [
     {
         path:'/',
-        redirect:'/type'
+        redirect:'/login'
     },
     {
         path: '/type',
@@ -46,6 +46,10 @@ export default [
       path: '/leaveBank',
       component: () => import('@/views/shop/leaveBank')
     },
+    {
+        path: '/pay',
+        component: () => import('@/views/pay')
+      },
     // {
     //     path:'/food',
     //     component:Food

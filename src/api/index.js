@@ -192,3 +192,24 @@ export function delStoreOut(data) {
 		}
 	})
 }
+// 订单管理
+// 列表 
+export function getPayList() {
+	return fetchGet('/pay/getlist')
+}
+// 删除
+export function delPay(data) {
+  return fetchPost('/pay/delete', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 修改状态
+export function updatePayStart(data) {
+  return fetchPost('/pay/update/start', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
