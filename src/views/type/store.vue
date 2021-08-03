@@ -18,6 +18,11 @@
         <el-table-column prop="enter_price" label="入库总金额"></el-table-column>
         <el-table-column prop="out_num" label="出库总数量"></el-table-column>
         <el-table-column prop="out_price" label="出库总金额"></el-table-column>
+        <el-table-column prop="creatr_date" label="剩余库存">
+          <template slot-scope="{row}">
+            {{ row.enter_num - row.out_num }}
+          </template>
+        </el-table-column>
         <el-table-column label="利润">
           <template slot-scope="{row}">
             {{ row.out_price - row.enter_price }}
@@ -25,11 +30,11 @@
         </el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column prop="creatr_date" label="创建时间"></el-table-column>
-        <el-table-column prop="remark" label="操作">
+        <!-- <el-table-column prop="remark" label="操作">
           <template slot-scope="{row}">
 
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </el-card>
     <!-- <vueQr v-if="dialogVisible" :info="info" :dialogVisible="dialogVisible" @closeDialog="closeDialog"/> -->

@@ -18,11 +18,11 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="入库数量" prop="num">
+        <el-form-item label="出库数量" prop="num">
           <el-input v-model="form.num"></el-input>
         </el-form-item>
 
-        <el-form-item label="入库价格" prop="price">
+        <el-form-item label="出库价格" prop="price">
           <el-input v-model="form.price"></el-input>
         </el-form-item>
 

@@ -17,21 +17,20 @@
         <el-table-column prop="barcode" label="条码"></el-table-column>
         <el-table-column prop="imgList" label="图片">
           <template slot-scope="{row}">
-            <el-image v-if="row.imgList" :src="row.imgList"></el-image>
+            <el-image v-if="row.imgList" :preview-src-list="[row.imgList]" :src="row.imgList"></el-image>
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column prop="creatr_date" label="创建时间"></el-table-column>
         <el-table-column prop="remark" label="操作">
           <template slot-scope="{row}">
-            <!-- <el-button size="mini" @click="generate(row)" type="primary">生成二维码</el-button> -->
+            <el-button size="mini" @click="editInfo(row)" type="primary">修改</el-button>
             <el-button size="mini" @click="delType(row)" type="danger">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
-    <!-- <vueQr v-if="dialogVisible" :info="info" :dialogVisible="dialogVisible" @closeDialog="closeDialog"/> -->
-    <edit :isEdit="isEdit" @closeEdit="closeEdit"/>
+    <edit :info="info" :isEdit="isEdit" v-if="isEdit" @closeEdit="closeEdit"/>
   </div>
 </template>
 <script>
@@ -46,9 +45,8 @@ export default {
   data() {
     return {
       tableList:[],
-      dialogVisible: false,
       isEdit: false,
-      info:{},
+      info: null,
     }
   },
   mounted() {
@@ -60,11 +58,9 @@ export default {
         this.tableList = res.list
       })
     },
-    closeDialog() {
-      this.dialogVisible = false;
-    },
     closeEdit() {
       this.isEdit = false;
+      this.info = null;
       this.getStopUser();
     },
     delType(row) {
@@ -87,10 +83,10 @@ export default {
         });          
       });
     },
-    generate(val) {
-      this.dialogVisible = true;
-      this.info = val;
-      console.log(val)
+    editInfo(row) {
+      this.info = row;
+      this.isEdit = true;
+      console.log(row)
     }
   }
 }

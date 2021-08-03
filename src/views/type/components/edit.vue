@@ -40,10 +40,10 @@
 </el-dialog>
 </template>
 <script>
-import { addType } from '../../../api/index.js'
+import { addType, updateType } from '../../../api/index.js'
 import OSS from 'ali-oss';
 export default {
-  props:['isEdit'],
+  props:['isEdit', 'info'],
   data() {
     return {
       form: {
@@ -81,6 +81,10 @@ export default {
         accessKeySecret: "0KRqXGdJRqeT07hlTd7DPomXru5qsu",
         bucket: "project-ts"  //要存储的目录
     });
+    if(this.info) {
+      console.log(this.info, 777)
+      this.form = this.info
+    }
     console.log(this.client)
   },
   methods: {
@@ -90,16 +94,30 @@ export default {
     addStopUser(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          addType(this.form).then(res => {
-            this.$message({
-              message: '添加成功',
-              type: 'success'
-            });
-            this.$emit('closeEdit')
-          })
+          if(this.info) {
+            this.updateType()
+          } else {
+            addType(this.form).then(res => {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              });
+              this.$emit('closeEdit')
+            })
+          }
+          
         }
       })
-      
+    },
+    // 修改
+    updateType() {
+      updateType({ ...this.form, modelId: this.form.id }).then(res => {
+        this.$message({
+          message: '修改成功',
+          type: 'success'
+        });
+        this.$emit('closeEdit')
+      })
     },
     Upload(file) {
       const that = this;

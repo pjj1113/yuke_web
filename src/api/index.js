@@ -124,6 +124,13 @@ export function addType(data) {
 		}
 	})
 }
+export function updateType(data) {
+  return fetchPost('/commodity/type/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
 // 删除
 export function delType(data) {
   return fetchPost('/commodity/type/delete', data, {
