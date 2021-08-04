@@ -5,7 +5,7 @@
         <span>库存管理</span>
         <transition name="slide-fade" mode="out-in">
 					<span class="float-right">
-						<!-- <el-button type="primary" @click="isEdit=true">新增</el-button> -->
+            <el-button type="primary" @click="exportExcelMethod">导出</el-button>
 					</span>
 				</transition>
       </div>
@@ -28,22 +28,41 @@
             {{ row.out_price - row.enter_price }}
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注"></el-table-column>
+        <!-- <el-table-column prop="remark" label="备注"></el-table-column> -->
         <el-table-column prop="creatr_date" label="创建时间"></el-table-column>
-        <!-- <el-table-column prop="remark" label="操作">
-          <template slot-scope="{row}">
-
-          </template>
-        </el-table-column> -->
       </el-table>
     </el-card>
-    <!-- <vueQr v-if="dialogVisible" :info="info" :dialogVisible="dialogVisible" @closeDialog="closeDialog"/> -->
-    <!-- <edit :isEdit="isEdit" @closeEdit="closeEdit"/> -->
+    <table id="exporttable" v-show="false">
+      <tr>
+        <!-- <td>编号</td> -->
+        <td>商品名称</td>
+        <td>型号</td>
+        <td>条码</td>
+        <td>入库总数量</td>
+        <td>入库总金额</td>
+        <td>出库总数量</td>
+        <td>出库总金额</td>
+        <td>剩余库存</td>
+        <td>利润</td>
+      </tr>
+      <tr v-for="(item, index) in tableList" :key="index">
+        <!-- <td>{{ item.id }}</td> -->
+        <td>{{ item.name }}</td>
+        <td>{{ item.model }}</td>
+        <td>{{ item.barcode }}</td>
+        <td>{{ item.enter_num }}</td>
+        <td>{{ item.enter_price }}</td>
+        <td>{{ item.out_num }}</td>
+        <td>{{ item.out_price }}</td>
+        <td>{{ item.enter_num - item.out_num }}</td>
+        <td>{{ item.out_price - item.enter_price }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 <script>
 // import vueQr from './components/vueQr';
-
+import { exportExcelMethod } from '@/utils/exportExcel';
 import store from '../../utils/store'
 export default {
   data() {
@@ -52,13 +71,18 @@ export default {
       dialogVisible: false,
       isEdit: false,
       info:{},
+      form: {
+
+      },
     }
   },
   async mounted() {
     this.tableList = await store.getStore()
   },
   methods: {
-    
+    exportExcelMethod() {
+      exportExcelMethod('exporttable',  '库存管理表', 'sheet1');
+    },
   }
 }
 </script>

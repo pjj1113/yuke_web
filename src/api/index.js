@@ -26,10 +26,13 @@ export function fetchPost(url, params, config, fail = false) {
   })
 }
 export function fetchGet(url, param, config, fail = false) {
+	// param.time = (new Date()).valueOf()
+	console.log(param)
+	let time = (new Date()).valueOf()
 	return new Promise((resolve, reject) => {
 		axios
 			.get(url, {
-				params: param
+				params: { ...param, time }
 			})
 			.then(
 				response => {

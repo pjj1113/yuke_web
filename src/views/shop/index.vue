@@ -1,16 +1,36 @@
 <template>
   <div>
     <el-card class="box-card">
-       <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix">
         <span>入库管理</span>
-        <transition name="slide-fade" mode="out-in">
-					<span class="float-right">
-						<el-button type="primary" @click="add">新增</el-button>
-            <el-button type="primary" @click="exportExcelMethod">导出</el-button>
-					</span>
-				</transition>
       </div>
-      <el-table :data="tableList" stripe border class="default-table" style="width: 100%">
+      <el-row>
+        <el-col :span="16">
+          <div class="float-left">
+            <el-form :model="form">
+              <el-form-item label="创建时间">
+                <el-date-picker
+                  v-model="form.date"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+                </el-date-picker>
+              </el-form-item>
+            </el-form>
+            <el-button type="primary" @click="getStoreList">查询</el-button>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <span class="float-right">
+            <el-button type="primary" @click="add">新增</el-button>
+            <el-button type="primary" @click="exportExcelMethod">导出</el-button>
+          </span>
+        </el-col>
+      </el-row>
+      
+      <el-table :data="tableList" stripe border class="default-table"  @selection-change="handleSelectionChange" style="width: 100%">
+        <el-table-column type="selection" width="55"   ></el-table-column>
         <el-table-column prop="id" label="编号" width="170"></el-table-column>
         <el-table-column prop="name" label="商品名称"></el-table-column>
         <el-table-column prop="model" label="型号"></el-table-column>
@@ -58,7 +78,7 @@
         <td>进货价</td>
         <td>入库日期</td>
       </tr>
-      <tr v-for="(item, index) in tableList" :key="index">
+      <tr v-for="(item, index) in selectDataList" :key="index">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.model }}</td>
@@ -74,7 +94,7 @@
 import { exportExcelMethod } from '@/utils/exportExcel';
 import { getStoreList, getCommodityTypeList, delStoreOut } from '../../api/index.js';
 import edit from './components/edit'
-
+import { parseTime } from '@/utils'
 export default {
   components: {
     edit
@@ -82,6 +102,7 @@ export default {
   data() {
     return {
       tableList:[],
+      selectDataList: [],
       typeList: [],
       dialogVisible: false,
       isEdit: false,
@@ -89,7 +110,10 @@ export default {
       classifyList: [],
       currentPage: 1,
       pageSize: 10,
-      total: 0
+      total: 0,
+      form: {
+        date: []
+      }
     }
   },
   watch: {
@@ -110,8 +134,17 @@ export default {
         this.getStoreList()
       })
     },
+    handleSelectionChange(val) {
+      this.selectDataList = val;
+    },
     getStoreList() {
-      getStoreList({ pageSize: this.pageSize, currentPage: this.currentPage }).then(res => {
+      let startDate, endDate
+      if(this.form.date.length) {
+        startDate = parseTime(this.form.date[0], '{y}-{m}-{d}') 
+        endDate = parseTime(this.form.date[1], '{y}-{m}-{d}')
+      }
+
+      getStoreList({ pageSize: this.pageSize, currentPage: this.currentPage, startDate, endDate }).then(res => {
         this.total = res.total;
         this.tableList = res.list.map(item => {
           let type = this.typeList.filter(val => val.id == item.type_id)
@@ -139,13 +172,13 @@ export default {
       this.isEdit = true;
     },
     delDate(val) {
-     delStoreOut({ id: val.id }).then(res => {
+      delStoreOut({ id: val.id }).then(res => {
         this.$message({
           message: '删除成功',
           type: 'success'
         });
-      this.getStoreList();
-     })
+        this.getStoreList();
+      })
     },
     handleSizeChange(val) {
       this.pageSize = val;
